@@ -1,4 +1,4 @@
-import { createSchool } from "../models/schoolModel.js";
+import { createSchool, getNearestSchools } from "../models/schoolModel.js";
 
 /*
 Add School API:
@@ -31,4 +31,13 @@ Functionality: Fetches all schools from the database, sorts them based on proxim
 Sorting Mechanism: Calculate and sort by the geographical distance between the user's coordinates and each school's coordinates.
 */
 
-export const listSchools = async (req, res) => {};
+export const listSchools = async (req, res) => {
+  const { latitude, longitude } = req.query;
+  try {
+    const result = await getNearestSchools(latitude, longitude);
+    res.status(200).json({ "sorted Schools": result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Database error" });
+  }
+};

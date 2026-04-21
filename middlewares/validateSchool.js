@@ -9,11 +9,24 @@ export const validateSchool = (req, res, next) => {
     return res.status(400).json({ error: "Invalid address" });
   }
 
-  if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+  if (!latitude || isNaN(latitude) || latitude < -90 || latitude > 90) {
     return res.status(400).json({ error: "Invalid latitude" });
   }
 
-  if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+  if (!longitude || isNaN(longitude) || longitude < -180 || longitude > 180) {
+    return res.status(400).json({ error: "Invalid longitude" });
+  }
+  next();
+};
+
+export const validateCoordinates = (req, res, next) => {
+  const { latitude, longitude } = req.query;
+  // TODO+Note: coordinates must be converted to number
+  if (!latitude || isNaN(latitude) || latitude < -90 || latitude > 90) {
+    return res.status(400).json({ error: "Invalid latitude" });
+  }
+
+  if (!longitude || isNaN(longitude) || longitude < -180 || longitude > 180) {
     return res.status(400).json({ error: "Invalid longitude" });
   }
   next();
