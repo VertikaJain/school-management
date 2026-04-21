@@ -8,8 +8,7 @@ const app = express();
 app.use(express.json());
 
 // Server connection
-app.listen(process.env.SERVER_PORT, () =>
-  console.log("Server running on PORT : ", process.env.SERVER_PORT),
-);
+const PORT = process.env.SERVER_PORT || 3000;
+app.listen(PORT, () => console.log("Server running on PORT : ", PORT));
 
 app.use("/api/schools", schoolRoutes);
